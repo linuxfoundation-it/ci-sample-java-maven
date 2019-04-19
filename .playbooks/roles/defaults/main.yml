@@ -1,0 +1,3 @@
+---
+goal: '--help'
+mvn_args: "--batch-mode"

@@ -1,0 +1,5 @@
+---
+- name: Maven
+  command: "mvn {{ mvn_args }} {{ goal }}"
+  args:
+      chdir: "{{ workdir }}"
