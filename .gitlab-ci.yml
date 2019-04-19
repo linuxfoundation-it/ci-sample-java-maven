@@ -1,0 +1,28 @@
+---
+
+image: williamyeh/ansible:alpine3
+
+variables:
+  ANSIBLE_STDOUT_CALLBACK: 'unixy'
+  RTD_PROJECT_NAME: 'itx-toolchain'
+
+cache:
+  paths:
+    - .m2/repository/
+rtd-verify:
+  script:
+    - ansible-playbook -c local .playbooks/rtd-verify.yml
+    - mv docs/_build/html/ public
+  artifacts:
+    paths:
+      - public
+rtd-merge:
+  script: ansible-playbook -c local .playbooks/rtd-merge.yml
+
+java-verify:
+  script: ansible-playbook -c local .playbooks/java-verify.yml
+  artifacts:
+    paths:
+      - target/
+java-merge:
+  script: ansible-playbook -c local .playbooks/java-merge.yml
