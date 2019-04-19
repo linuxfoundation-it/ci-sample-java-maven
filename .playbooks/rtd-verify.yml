@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  roles:
+      - role: rtd
+        task: verify
+        ensure_tox: true

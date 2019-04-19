@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  roles:
+    - ensure-maven
+    - role: maven
+      vars:
+        goal: "clean install"
+        workdir: "../src"

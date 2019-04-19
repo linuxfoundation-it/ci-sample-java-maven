@@ -1,0 +1,10 @@
+---
+- name: Ensure Maven dependencies are installed
+  package:
+      name:
+        - openjdk8
+        - nss
+
+- name: Ensure Maven is installed
+  package:
+      name: maven
