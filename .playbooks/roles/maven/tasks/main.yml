@@ -1,0 +1,9 @@
+---
+- name: Ensure Maven is Installed
+  when: ensure_maven == true
+  include_tasks: ensure-maven.yml
+
+- name: Maven
+  command: "mvn {{ mvn_args }} {{ goal }}"
+  args:
+    chdir: "{{ workdir }}"
