@@ -1,0 +1,19 @@
+---
+
+image: williamyeh/ansible:alpine3
+
+variables:
+  ANSIBLE_STDOUT_CALLBACK: 'unixy'
+cache:
+  paths:
+    - .m2/repository/
+java-verify:
+  script: ansible-playbook -c local .playbooks/java-verify.yml
+  artifacts:
+    paths:
+      - target/
+java-merge:
+  script: ansible-playbook -c local .playbooks/java-merge.yml
+  only:
+    refs:
+      - master
