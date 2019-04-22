@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  roles:
+    - role: maven
+      vars:
+        ensure_maven: true
+        goal: "clean install"
+        workdir: "../"

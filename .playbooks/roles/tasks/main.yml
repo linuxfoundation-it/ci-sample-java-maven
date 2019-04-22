@@ -1,0 +1,33 @@
+---
+- name: Ensure Tox is installed
+  when: ensure_tox == true
+  pip:
+      name: tox
+
+- name: Run Docs Tox Job
+  when: task == 'verify'
+  command: tox -e docs
+
+- name: RTD Merge
+  when: task == 'merge'
+  block:
+    - name: Project name required
+      fail:
+          msg: RTD_PROJECT_NAME is not set
+      when: rtd.project_name is not defined
+    - name: Build URL required
+      fail:
+          msg: RTD_BUILD_URL is not set
+      when: rtd.build_url is not defined
+    - name: Build Token required
+      fail:
+          msg: RTD_TOKEN is not set
+      when: rtd.token is not defined
+
+    - name: Trigger readthedocs build webhook via token
+      uri:
+        method: POST
+        url: 'https://readthedocs.org/api/v2/webhook/{{ rtd.project_name }}/{{ rtd.build_url }}/'
+        body_format: form-urlencoded
+        body:
+          token: '{{ rtd.token }}'

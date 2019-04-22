@@ -1,0 +1,4 @@
+---
+ensure_maven: false
+goal: '--help'
+mvn_args: "--batch-mode"
