@@ -1,0 +1,5 @@
+---
+- src: bbaassssiiee.artifactory
+- src: linuxfoundation.ensure-tox,0.1
+- src: linuxfoundation.rtd-verify,0.1
+- src: linuxfoundation.rtd-merge,0.1
