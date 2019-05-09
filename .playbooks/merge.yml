@@ -9,8 +9,3 @@
       vars:
         ensure_maven: true
         goal: "clean deploy"
-    - name: Trigger RTD Build
-      include_role:
-        name: rtd
-      vars:
-        task: merge
