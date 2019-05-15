@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  {% if localrepository is defined %}
+  <localRepository>{{ localrepository }}</localRepository>
+  {% endif %}
+  <interactiveMode>{{ interactivemode | default(false) }}</interactiveMode>
+  {% if offline is defined %}
+  <offline>true</offline>
+  {% endif %}
+  {% if plugingroups is defined %}
+  <pluginGroups>
+  {% for plugingroup in plugingroups %}
+      <pluginGroup>{{ plugingroup }}</pluginGroup>
+  {% endfor %}
+  </pluginGroups>
+  {% endif %}
+  {% if servers is defined %}
+  <servers>
+    {% for server in servers %}
+    <server>
+      <id>{{ server.id }}</id>
+      {% if server.username is defined and server.password is defined %}
+      <username>{{ server.username }}</username>
+      {% if server.privatekey is undefined %}
+      <password>{{ server.password }}</password>
+      {% endif %}
+      {% endif %}
+      {% if server.privatekey is defined and server.passphrase is defined %}
+      <privateKey>{{ server.privatekey }}</privateKey>
+      <passphrase>{{ server.passphrase }}</passphrase>
+      {% endif %}
+      {# TODO: Support file/directory perms #}
+    </server>
+    {% endfor %}
+  </servers>
+  {% endif %}
+  {% if mirrors is defined %}
+  <mirrors>
+      {% for mirror in mirrors %}
+      <mirror>
+          <id>{{ mirror.id }}</id>
+          {% if mirror.name is defined %}
+          <name>{{ mirror.name }}</name>
+          {% endif %}
+          {% if mirror.url is defined %}
+          <url>{{ mirror.url }}</url>
+          {% endif %}
+          {% if mirror.mirrorof is defined %}
+          <mirrorOf>{{ mirror.mirrorof }}</mirrorOf>
+          {% endif %}
+      </mirror>
+      {% endfor %}
+  </mirrors>
+  {% endif %}
+  {% if proxies is defined %}
+  <proxies>
+      {% for proxy in proxies %}
+      <proxy>
+          <id>{{ proxy.id }}</id>
+          {% if proxy.active is defined %}
+          <active>{{ proxy.active }}</active>
+          {% endif %}
+          {% if proxy.protocol is defined %}
+          <protocol>{{ proxy.protocol }}</protocol>
+          {% endif %}
+          {% if proxy.host is defined %}
+          <host>{{ proxy.host }}</host>
+          {% endif %}
+          {% if proxy.port is defined %}
+          <port>{{ proxy.port }}</port>
+          {% endif %}
+          {% if proxy.username is defined %}
+          <username>{{ proxy.username }}</username>
+          {% endif %}
+          {% if proxy.password is defined %}
+          <password>{{ proxy.password }}</password>
+          {% endif %}
+          {% if proxy.nonproxyhosts is defined %}
+          <nonProxyHosts>{{ proxy.nonproxyhosts }}</nonProxyHosts>
+          {% endif %}
+      </proxy>
+      {% endfor %}
+  </proxies>
+  {% endif %}
+  {# TODO: Support profiles
+  <profiles/>
+  <activeProfiles/>
+  #}
+</settings>
