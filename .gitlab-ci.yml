@@ -1,0 +1,40 @@
+---
+image: linuxfoundationit/ansible-openjdk8-maven3.6.1
+
+variables:
+  ANSIBLE_STDOUT_CALLBACK: 'unixy'
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+
+docs-verify:
+  stage: build
+  script:
+    - ansible-playbook -c local .playbooks/docs-verify.yml
+    - mv docs/_build/html/ public
+  only:
+    changes:
+      - 'docs/*'
+  artifacts:
+    paths:
+      - public
+docs-merge:
+  stage: deploy
+  script: ansible-playbook -c local .playbooks/docs-merge.yml
+  only:
+    - master
+
+build:
+  stage: build
+  script:
+    - ansible-playbook -v -c local .playbooks/verify.yml
+
+deploy:
+  stage: deploy
+  script:
+    - ansible-playbook -c local .playbooks/merge.yml
+  only:
+    - master

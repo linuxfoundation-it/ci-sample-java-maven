@@ -1,0 +1,6 @@
+---
+ensure_tox: false
+rtd:
+  project_name: "{{ lookup('env', 'RTD_PROJECT_NAME') }}"
+  build_url: "{{ lookup('env', 'RTD_BUILD_URL') }}"
+  token: "{{ lookup('env', 'RTD_TOKEN') }}"
