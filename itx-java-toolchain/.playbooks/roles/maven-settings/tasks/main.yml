@@ -1,0 +1,23 @@
+---
+- name: Ensure Settings destination directory exists
+  file:
+    path: "{{ settings_xml_dest | dirname }}"
+    state: directory
+
+- name: Ensure lxml Module installed
+  package:
+    name: python-lxml
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure lxml Module installed
+  package:
+    name: py-lxml
+    state: present
+  when: ansible_os_family == 'Alpine'
+
+- name: Create settings.xml file
+  template:
+    src: '{{ role_path }}/templates/settings.xml.j2'
+    dest: "{{ settings_xml_dest }}"
+    lstrip_blocks: true
