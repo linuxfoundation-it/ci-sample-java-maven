@@ -1,0 +1,23 @@
+---
+image: linuxfoundationit/ansible-openjdk8-maven3.6.1
+
+variables:
+  ANSIBLE_STDOUT_CALLBACK: 'unixy'
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+
+build:
+  stage: build
+  script:
+    - ansible-playbook -v -c local .playbooks/verify.yml
+
+deploy:
+  stage: deploy
+  script:
+    - ansible-playbook -c local .playbooks/merge.yml
+  only:
+    - master
