@@ -1,0 +1,9 @@
+---
+- name: Ensure Maven is Installed
+  when: ensure_maven
+  include_tasks: ensure-maven.yml
+
+- name: Maven - Run  # noqa 301
+  shell: "mvn {{ mvn_cli_opts }} {{ mvn_opts }} {{ goal }}"
+  args:
+    chdir: "{{ workdir }}"

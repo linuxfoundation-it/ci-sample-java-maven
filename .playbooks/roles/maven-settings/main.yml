@@ -1,0 +1,6 @@
+---
+settings_xml_dest: "{{ ansible_env.HOME }}/.m2/settings.xml"
+servers:
+  - id: artifactory
+    username: '${env.MAVEN_REPO_USER}'
+    password: '${env.MAVEN_REPO_PASS}'
