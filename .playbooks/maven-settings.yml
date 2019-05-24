@@ -1,0 +1,12 @@
+---
+- name: Create Maven Settings
+  include_role:
+    name: maven-settings
+  vars:
+    servers:
+      - id: central
+        username: '${env.MAVEN_REPO_USER}'
+        password: '${env.MAVEN_REPO_PASS}'
+      - id: snapshots
+        username: '${env.MAVEN_REPO_USER}'
+        password: '${env.MAVEN_REPO_PASS}'
