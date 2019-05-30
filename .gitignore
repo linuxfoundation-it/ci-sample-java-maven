@@ -1,1 +1,3 @@
-target/*
+.tox/
+*.retry
+*.swp
