@@ -1,0 +1,7 @@
+---
+ensure_maven: false
+goal: 'clean compile'
+workdir: "{{ playbook_dir | dirname }}"
+mvn_cli_opts: "{{ lookup('env', 'MAVEN_CLI_OPTS')
+               | default('--show-version --batch') }}"
+mvn_opts: "{{ lookup('env', 'MAVEN_OPTS') | default('') }}"
