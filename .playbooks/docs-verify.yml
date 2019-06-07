@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Build Sphinx Documentation
+      include_role:
+        name: rtd
+      vars:
+        task: verify
+        ensure_tox: true

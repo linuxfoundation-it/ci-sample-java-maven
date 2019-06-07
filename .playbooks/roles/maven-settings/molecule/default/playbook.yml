@@ -1,0 +1,82 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: maven-settings
+      vars:
+        offline: true
+        localrespository: '${user.home}/.m2/repository'
+        servers:
+          - id: artifactory
+            username: '${env.MAVEN_REPO_USER}'
+            password: '${env.MAVEN_REPO_PASS}'
+          - id: central
+            username: 'admin'
+            password: 'ignoredbecauseofprivatekey'
+            privatekey: '${user.home}/.ssh/id_rsa'
+            passphrase: 'helloworld'
+            filepermissions: 664
+            directorypermissions: 775
+        mirrors:
+          - id: planetmirror.com
+            name: PlanetMirror Australia
+            url: http://downloads.planetmirror.com/pub/maven2
+            mirrorof: central
+        proxies:
+          - id: myproxy
+            active: false
+            protocol: https
+            host: proxy.somewhere.come
+            port: 8443
+            username: proxyuser
+            password: somepasswo
+            nonproxyhosts: '*.google.com|ibiblio.org'
+        plugingroups:
+          - 'org.eclipse.jetty'
+        profiles:
+          - id: test
+            activation:
+              activebydefault: false
+              jdk: 1.5
+              os:
+                name: Windows XP
+                family: Windows
+                arch: x86
+                version: 5.1.2600
+              property:
+                name: mavenVersion
+                value: 2.0.3
+              file:
+                exists: "${basedir}/file2.properties"
+                missing: "${basedir}/file1.properties"
+            properties:
+              - name: 'user.install'
+                value: "${user.home}/our-project"
+            repositories:
+              - id: codehausSnapshots
+                name: Codehaus Snapshots
+                releases:
+                  enabled: false
+                  updatepolicy: always
+                  checksumpolicy: warn
+                snapshots:
+                  enabled: true
+                  updatepolicy: never
+                  checksumpolicy: fail
+                url: http://snapshots.maven.codehaus.org/maven2
+                layout: default
+            pluginrepositories:
+              - id: codehausPlugins
+                name: Codehaus Plugins
+                releases:
+                  enabled: false
+                  updatepolicy: always
+                  checksumpolicy: warn
+                snapshots:
+                  enabled: true
+                  updatepolicy: never
+                  checksumpolicy: fail
+                url: http://plugins.maven.codehaus.org/maven2
+                layout: legacy
+        activeprofiles:
+          - id: test

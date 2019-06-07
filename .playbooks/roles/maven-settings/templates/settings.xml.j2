@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  {% if localrepository is defined %}
+  <localRepository>{{ localrepository }}</localRepository>
+  {% endif %}
+  <interactiveMode>{{ interactivemode | default('false') }}</interactiveMode>
+  {% if offline is defined %}
+  <offline>true</offline>
+  {% endif %}
+  {% if plugingroups is defined %}
+  <pluginGroups>
+  {% for plugingroup in plugingroups %}
+      <pluginGroup>{{ plugingroup }}</pluginGroup>
+  {% endfor %}
+  </pluginGroups>
+  {% endif %}
+  {% if servers is defined %}
+  <servers>
+    {% for server in servers %}
+    <server>
+      <id>{{ server.id }}</id>
+      {% if server.username is defined and server.password is defined %}
+      <username>{{ server.username }}</username>
+      {% if server.privatekey is undefined %}
+      <password>{{ server.password }}</password>
+      {% endif %}
+      {% endif %}
+      {% if server.privatekey is defined and server.passphrase is defined %}
+      <privateKey>{{ server.privatekey }}</privateKey>
+      <passphrase>{{ server.passphrase }}</passphrase>
+      {% endif %}
+      {% if server.filepermissions is defined %}
+      <filePermissions>{{ server.filepermissions }}</filePermissions>
+      {% endif %}
+      {% if server.directorypermissions is defined %}
+      <directoryPermissions>{{ server.directorypermissions }}</directoryPermissions>
+      {% endif %}
+    </server>
+    {% endfor %}
+  </servers>
+  {% endif %}
+  {% if mirrors is defined %}
+  <mirrors>
+      {% for mirror in mirrors %}
+      <mirror>
+          <id>{{ mirror.id }}</id>
+          {% if mirror.name is defined %}
+          <name>{{ mirror.name }}</name>
+          {% endif %}
+          {% if mirror.url is defined %}
+          <url>{{ mirror.url }}</url>
+          {% endif %}
+          {% if mirror.mirrorof is defined %}
+          <mirrorOf>{{ mirror.mirrorof }}</mirrorOf>
+          {% endif %}
+      </mirror>
+      {% endfor %}
+  </mirrors>
+  {% endif %}
+  {% if proxies is defined %}
+  <proxies>
+      {% for proxy in proxies %}
+      <proxy>
+          <id>{{ proxy.id }}</id>
+          {% if proxy.active is defined %}
+          <active>{{ proxy.active }}</active>
+          {% endif %}
+          {% if proxy.protocol is defined %}
+          <protocol>{{ proxy.protocol }}</protocol>
+          {% endif %}
+          {% if proxy.host is defined %}
+          <host>{{ proxy.host }}</host>
+          {% endif %}
+          {% if proxy.port is defined %}
+          <port>{{ proxy.port }}</port>
+          {% endif %}
+          {% if proxy.username is defined %}
+          <username>{{ proxy.username }}</username>
+          {% endif %}
+          {% if proxy.password is defined %}
+          <password>{{ proxy.password }}</password>
+          {% endif %}
+          {% if proxy.nonproxyhosts is defined %}
+          <nonProxyHosts>{{ proxy.nonproxyhosts }}</nonProxyHosts>
+          {% endif %}
+      </proxy>
+      {% endfor %}
+  </proxies>
+  {% endif %}
+  {% if profiles is defined %}
+  <profiles>
+      {% for profile in profiles %}
+      <profile>
+          <id>{{ profile.id }}</id>
+          {% if profile.activation is defined %}
+          <activation>
+              {% set activation = profile.activation %}
+              <activeByDefault>{{ activation.activebydefault | default('false') }}</activeByDefault>
+              {% if activation.jdk is defined %}
+              <jdk>{{ activation.jdk }}</jdk>
+              {% endif %}
+              {% if activation.os is defined %}
+              <os>
+                  {% set os = activation.os %}
+                  {% if os.name is defined %}
+                  <name>{{ os.name }}</name>
+                  {% endif %}
+                  {% if os.family is defined %}
+                  <family>{{ os.family }}</family>
+                  {% endif %}
+                  {% if os.arch is defined %}
+                  <arch>{{ os.arch }}</arch>
+                  {% endif %}
+                  {% if os.version is defined %}
+                  <version>{{ os.version }}</version>
+                  {% endif %}
+              </os>
+              {% endif %}
+              {% if activation.property is defined %}
+              <property>
+                  {% set property = activation.property %}
+                  <name>{{ property.name }}</name>
+                  <value>{{ property.value }}</value>
+              </property>
+              {% endif %}
+              {% if activation.file is defined %}
+              <file>
+                  {% set file = activation.file %}
+                  {% if file.exists is defined %}
+                  <exists>{{ file.exists }}</exists>
+                  {% endif %}
+                  {% if file.missing is defined %}
+                  <missing>{{ file.missing }}</missing>
+                  {% endif %}
+              </file>
+              {% endif %}
+          </activation>
+          {% endif %}
+          {% if profile.properties is defined %}
+          <properties>
+              {% for property in profile.properties %}
+              <{{ property.name }}>{{ property.value }}</{{ property.name }}>
+              {% endfor %}
+          </properties>
+          {% endif %}
+          {% if profile.repositories is defined %}
+          <repositories>
+              {% for repository in profile.repositories %}
+              <repository>
+                  <id>{{ repository.id }}</id>
+                  {% if repository.name is defined %}
+                  <name>{{ repository.name }}</name>
+                  {% endif %}
+                  {% if repository.releases is defined %}
+                  <releases>
+                      {% set releases = repository.releases %}
+                      <enabled>{{ releases.enabled | default('false') }}</enabled>
+                      {% if releases.updatepolicy is defined %}
+                      <updatePolicy>{{ releases.updatepolicy }}</updatePolicy>
+                      {% endif %}
+                      {% if releases.checksumpolicy is defined %}
+                      <checksumPolicy>{{ releases.checksumpolicy }}</checksumPolicy>
+                      {% endif %}
+                  </releases>
+                  {% endif %}
+                  {% if repository.snapshots is defined %}
+                  <snapshots>
+                      {% set snapshots = repository.snapshots %}
+                      <enabled>{{ snapshots.enabled | default('false') }}</enabled>
+                      {% if snapshots.updatepolicy is defined %}
+                      <updatePolicy>{{ snapshots.updatepolicy }}</updatePolicy>
+                      {% endif %}
+                      {% if snapshots.checksumpolicy is defined %}
+                      <checksumPolicy>{{ snapshots.checksumpolicy }}</checksumPolicy>
+                      {% endif %}
+                  </snapshots>
+                  {% endif %}
+                  <url>{{ repository.url }}</url>
+                  <layout>{{ repository.layout | default('default') }}</layout>
+              </repository>
+              {% endfor %}
+          </repositories>
+          {% endif %}
+          {% if profile.pluginrepositories is defined %}
+          <pluginRepositories>
+              {% for repository in profile.pluginrepositories %}
+              <repository>
+                  <id>{{ repository.id }}</id>
+                  {% if repository.name is defined %}
+                  <name>{{ repository.name }}</name>
+                  {% endif %}
+                  {% if repository.releases is defined %}
+                  <releases>
+                      {% set releases = repository.releases %}
+                      <enabled>{{ releases.enabled | default('false') }}</enabled>
+                      {% if releases.updatepolicy is defined %}
+                      <updatePolicy>{{ releases.updatepolicy }}</updatePolicy>
+                      {% endif %}
+                      {% if releases.checksumpolicy is defined %}
+                      <checksumPolicy>{{ releases.checksumpolicy }}</checksumPolicy>
+                      {% endif %}
+                  </releases>
+                  {% endif %}
+                  {% if repository.snapshots is defined %}
+                  <snapshots>
+                      {% set snapshots = repository.snapshots %}
+                      <enabled>{{ snapshots.enabled | default('false') }}</enabled>
+                      {% if snapshots.updatepolicy is defined %}
+                      <updatePolicy>{{ snapshots.updatepolicy }}</updatePolicy>
+                      {% endif %}
+                      {% if snapshots.checksumpolicy is defined %}
+                      <checksumPolicy>{{ snapshots.checksumpolicy }}</checksumPolicy>
+                      {% endif %}
+                  </snapshots>
+                  {% endif %}
+                  <url>{{ repository.url }}</url>
+                  <layout>{{ repository.layout | default('default') }}</layout>
+              </repository>
+              {% endfor %}
+          </pluginRepositories>
+          {% endif %}
+      </profile>
+      {% endfor %}
+  </profiles>
+  {% endif %}
+  {% if activeprofiles is defined %}
+  <activeProfiles>
+      {% for profile in activeprofiles %}
+      <activeProfile>{{ profile.id }}</activeProfile>
+      {% endfor %}
+  </activeProfiles>
+  {% endif %}
+</settings>

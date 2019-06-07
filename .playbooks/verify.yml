@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Include Maven Settings
+      include_tasks: maven-settings.yml
+    - name: Run Maven
+      include_role:
+        name: maven
+      vars:
+        ensure_maven: true
