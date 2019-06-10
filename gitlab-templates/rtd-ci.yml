@@ -1,12 +1,11 @@
 ---
 image: python:3
 
-before_script:
-  - pip3 install sphinx,sphinx-rtd-theme
-  - pip3 install recommonmark
-
 build:
   stage: docs
   script:
+    - pip install sphinx
+    - pip install sphinx-rtd-theme
+    - pip install recommonmark
     - cd doc ; make html
     - mv build/html/ ../public/
