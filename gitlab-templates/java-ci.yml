@@ -5,12 +5,12 @@ cache:
 
 build:
   stage: build
-  image: maven:3-jdk-13
+  image: maven:3-jdk-8
   script: mvn $MAVEN_CLI_OPTS clean verify
 
 publish:
   stage: publish
-  image: maven:3-jdk-13
+  image: maven:3-jdk-8
   script: mvn $MAVEN_CLI_OPTS deploy
   only:
     - master
