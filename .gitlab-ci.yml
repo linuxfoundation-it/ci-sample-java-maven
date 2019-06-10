@@ -1,0 +1,14 @@
+---
+image: alpine:latest
+
+stages:
+  - verify
+  - build
+  - test
+  - docs
+- publish
+
+include:
+  - template: gitlab-templates/rtd-ci.yml
+
+  - template: gitlab-templates/java-ci.yml
