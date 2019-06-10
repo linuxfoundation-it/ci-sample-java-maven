@@ -6,7 +6,7 @@ stages:
   - build
   - test
   - docs
-- publish
+  - publish
 
 include:
   - template: gitlab-templates/rtd-ci.yml
