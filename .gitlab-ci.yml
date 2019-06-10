@@ -9,6 +9,4 @@ stages:
   - publish
 
 include:
-  - local: gitlab-templates/rtd-ci.yml
-
   - local: gitlab-templates/java-ci.yml
