@@ -1,8 +1,7 @@
 ---
-image: python:3
-
 build:
   stage: docs
+  image: python:3
   script:
     - pip install sphinx
     - pip install sphinx-rtd-theme

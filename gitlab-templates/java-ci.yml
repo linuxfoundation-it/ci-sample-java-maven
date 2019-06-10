@@ -1,16 +1,16 @@
 ---
-image: maven:3-jdk-13
-
 cache:
   paths:
     - .m2/repository/
 
 build:
   stage: build
+  image: maven:3-jdk-13
   script: mvn $MAVEN_CLI_OPTS clean verify
 
 publish:
   stage: publish
+  image: maven:3-jdk-13
   script: mvn $MAVEN_CLI_OPTS deploy
   only:
     - master
