@@ -1,0 +1,14 @@
+---
+image: alpine:latest
+
+stages:
+  - verify
+  - build
+  - test
+  - stage
+  - release
+  - sonar
+
+
+include:
+  - local: .gitlab-templates/java-ci.yml
